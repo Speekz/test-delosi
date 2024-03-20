@@ -1,17 +1,20 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react";
+import { rotateAntiClockwise } from "src/utils/helper/rotateMatrix";
 
 export type matrixContextType = {
-  initMatrix: any[][];
+  initMatrix: number[][];
   setInitMatrix: Dispatch<SetStateAction<any>>;
   rotatedMatrix: number[][];
   setRotatedMatrix: Dispatch<SetStateAction<any>>;
+  rotateMatrix: (input: number[][]) => void;
 };
 
 const initMatrixContext = {
-  initMatrix: [[]],
+  initMatrix: [[0]],
   setInitMatrix: () => {},
-  rotatedMatrix: [[]],
+  rotatedMatrix: [[0]],
   setRotatedMatrix: () => {},
+  rotateMatrix: () => {},
 };
 
 export const MatrixContext =
@@ -23,9 +26,21 @@ export const MatrixContextProvider = ({ children }: any) => {
     initMatrixContext.rotatedMatrix
   );
 
+  const rotateMatrix = (input: number[][]) => {
+    setInitMatrix(input);
+    setRotatedMatrix(rotateAntiClockwise(input));
+    console.log(rotatedMatrix);
+  };
+
   return (
     <MatrixContext.Provider
-      value={{ initMatrix, setInitMatrix, rotatedMatrix, setRotatedMatrix }}
+      value={{
+        initMatrix,
+        setInitMatrix,
+        rotatedMatrix,
+        setRotatedMatrix,
+        rotateMatrix,
+      }}
     >
       {children}
     </MatrixContext.Provider>

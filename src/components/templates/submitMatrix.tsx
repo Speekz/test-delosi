@@ -8,6 +8,7 @@ import {
   isDefined,
   isMatrix,
 } from "src/utils/helper/checkMatrix";
+import { rotateAntiClockwise } from "src/utils/helper/rotateMatrix";
 
 type Inputs = {
   matrix: string;
@@ -15,13 +16,12 @@ type Inputs = {
 
 const SubmitMatrix = () => {
   const { register, handleSubmit } = useForm<Inputs>();
-  const { setInitMatrix } = useContext(MatrixContext);
+  const { rotateMatrix } = useContext(MatrixContext);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const input = JSON.parse(data.matrix);
+    const input = JSON.parse(data.matrix.split(" ").join(""));
     if (isDefined(input) && isMatrix(input) && isAllNumbersMatrix(input)) {
-      setInitMatrix(input);
-      console.log(input, "is a matrix");
+      rotateMatrix(input);
     }
   };
 

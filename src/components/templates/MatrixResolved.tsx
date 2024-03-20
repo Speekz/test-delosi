@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { MatrixContext } from "src/hooks/context/matrixContext";
 
 function MatrixResolved() {
-  const matrixContext = useContext(MatrixContext);
-  return <div>{JSON.stringify(matrixContext.initMatrix)}</div>;
+  const { rotatedMatrix } = useContext(MatrixContext);
+  return <div>{JSON.stringify(rotatedMatrix)}</div>;
 }
 
 export default MatrixResolved;
