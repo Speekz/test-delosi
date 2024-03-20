@@ -6,7 +6,7 @@ export function isAllNumbersMatrix(matrix: any[][]): boolean {
 }
 
 export function isDefined(value: any): value is any[] {
-  return typeof value === "object" && value !== null && Array.isArray(value); // Check if the matrix is defined
+  return typeof value === "object" && value !== null; // Check if the matrix is defined
 }
 
 export function isMatrix(obj: any): obj is any[][] {

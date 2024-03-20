@@ -21,7 +21,7 @@ const initError = {
 
 const SubmitMatrix = () => {
   const { register, handleSubmit } = useForm<Inputs>();
-  const { rotateMatrix } = useContext(MatrixContext);
+  const { rotateMatrix, setRotatedMatrix } = useContext(MatrixContext);
   const [inputError, setInputError] = useState(initError);
 
   const refreshError = () => {
@@ -29,18 +29,43 @@ const SubmitMatrix = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setRotatedMatrix([[0]]);
     if (data.matrix.length === 0) {
-      setInputError({
+      return setInputError({
         message: "El campo no debe estar vacio",
         isError: true,
       });
-      return;
     }
 
-    refreshError();
-    const input = JSON.parse(data.matrix.split(" ").join(""));
-    if (isDefined(input) && isMatrix(input) && isAllNumbersMatrix(input)) {
+    try {
+      const input = JSON.parse(data.matrix.split(" ").join(""));
+      if (!isDefined(input)) {
+        return setInputError({
+          message: "La matriz debe estar correctamente definida",
+          isError: true,
+        });
+      }
+
+      if (!isMatrix(input)) {
+        return setInputError({
+          message: "El valor debe ser una matriz 2D",
+          isError: true,
+        });
+      }
+
+      if (!isAllNumbersMatrix(input)) {
+        return setInputError({
+          message: "La matriz debe estar compuesta de solo numeros",
+          isError: true,
+        });
+      }
+      refreshError();
       rotateMatrix(input);
+    } catch (e) {
+      return setInputError({
+        message: "El valor ingresado no puede ser interpretado",
+        isError: true,
+      });
     }
   };
 
