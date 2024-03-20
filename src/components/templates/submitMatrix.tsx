@@ -1,6 +1,13 @@
 "use client";
 
+import { useContext } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { MatrixContext } from "src/hooks/context/matrixContext";
+import {
+  isAllNumbersMatrix,
+  isDefined,
+  isMatrix,
+} from "src/utils/helper/checkMatrix";
 
 type Inputs = {
   matrix: string;
@@ -8,8 +15,15 @@ type Inputs = {
 
 const SubmitMatrix = () => {
   const { register, handleSubmit } = useForm<Inputs>();
+  const { setInitMatrix } = useContext(MatrixContext);
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const input = JSON.parse(data.matrix);
+    if (isDefined(input) && isMatrix(input) && isAllNumbersMatrix(input)) {
+      setInitMatrix(input);
+      console.log(input, "is a matrix");
+    }
+  };
 
   return (
     <div>

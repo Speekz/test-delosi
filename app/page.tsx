@@ -1,4 +1,4 @@
-import SubmitMatrix from "src/components/templates/submitMatrix";
+import MainPage from "src/components/templates/mainPage";
 
 export const metadata = {
   title: "Rotacion de Matriz 90grados contrareloj",
@@ -7,8 +7,7 @@ export const metadata = {
 export default function Page() {
   return (
     <div>
-      <h1>App Router</h1>
-      <SubmitMatrix />
+      <MainPage></MainPage>
     </div>
   );
 }
