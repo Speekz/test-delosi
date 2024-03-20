@@ -29,7 +29,6 @@ export const MatrixContextProvider = ({ children }: any) => {
   const rotateMatrix = (input: number[][]) => {
     setInitMatrix(input);
     setRotatedMatrix(rotateAntiClockwise(input));
-    console.log(rotatedMatrix);
   };
 
   return (
