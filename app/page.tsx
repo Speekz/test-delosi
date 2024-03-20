@@ -1,4 +1,4 @@
-import MainPage from "src/components/templates/mainPage";
+import MainPage from "src/components/templates/MainPage";
 
 export const metadata = {
   title: "Rotacion de Matriz 90grados contrareloj",
@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <div>
+    <div className="absolute h-full w-full">
       <MainPage></MainPage>
     </div>
   );

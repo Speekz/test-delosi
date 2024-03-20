@@ -5,10 +5,19 @@ function MatrixResolved() {
   const { rotatedMatrix } = useContext(MatrixContext);
 
   return (
-    <div>
-      {JSON.stringify(rotatedMatrix) === "[[0]]"
-        ? ""
-        : JSON.stringify(rotatedMatrix)}
+    <div className="pt-4">
+      <div>
+        <label className="block text-lg font-medium leading-6 text-gray-900">
+          Matriz Rotada
+        </label>
+      </div>
+      <div>
+        <label>
+          {JSON.stringify(rotatedMatrix) === "[[0]]"
+            ? ""
+            : JSON.stringify(rotatedMatrix)}
+        </label>
+      </div>
     </div>
   );
 }
