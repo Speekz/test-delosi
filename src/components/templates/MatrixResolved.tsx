@@ -6,18 +6,18 @@ function MatrixResolved() {
 
   return (
     <div className="pt-4">
-      <div>
-        <label className="block text-lg font-medium leading-6 text-gray-900">
-          Matriz Rotada
-        </label>
-      </div>
-      <div>
-        <label>
-          {JSON.stringify(rotatedMatrix) === "[[0]]"
-            ? ""
-            : JSON.stringify(rotatedMatrix)}
-        </label>
-      </div>
+      {JSON.stringify(rotatedMatrix) !== "[[0]]" ? (
+        <>
+          <div>
+            <label className="block text-lg font-medium leading-6 text-gray-900">
+              Matriz Rotada
+            </label>
+          </div>
+          <div>
+            <label>{JSON.stringify(rotatedMatrix)}</label>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

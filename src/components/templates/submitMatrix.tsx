@@ -1,6 +1,7 @@
 "use client";
 
-import { useContext } from "react";
+import classnames from "classnames";
+import { useContext, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { MatrixContext } from "src/hooks/context/matrixContext";
 import {
@@ -13,14 +14,30 @@ type Inputs = {
   matrix: string;
 };
 
+const initError = {
+  message: "",
+  isError: false,
+};
+
 const SubmitMatrix = () => {
   const { register, handleSubmit } = useForm<Inputs>();
   const { rotateMatrix } = useContext(MatrixContext);
+  const [inputError, setInputError] = useState(initError);
+
+  const refreshError = () => {
+    setInputError(initError);
+  };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (data.matrix.length === 0) {
+      setInputError({
+        message: "El campo no debe estar vacio",
+        isError: true,
+      });
       return;
     }
+
+    refreshError();
     const input = JSON.parse(data.matrix.split(" ").join(""));
     if (isDefined(input) && isMatrix(input) && isAllNumbersMatrix(input)) {
       rotateMatrix(input);
@@ -37,17 +54,24 @@ const SubmitMatrix = () => {
           <input
             type="text"
             id="matrix"
-            className="block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6"
+            className={classnames(
+              "block w-full rounded-md border-0 py-1.5 pr-10sm:text-sm sm:leading-6",
+              inputError.isError
+                ? " text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500 "
+                : "text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+            )}
             placeholder="[[1, 2], [3, 4]]"
             defaultValue=""
             aria-invalid="true"
             aria-describedby="array-error"
             {...register("matrix")}
           />
+          {inputError.isError ? (
+            <p className="mt-2 text-sm text-red-600" id="email-error">
+              {inputError.message}
+            </p>
+          ) : null}
         </div>
-        {/* <p className="mt-2 text-sm text-red-600" id="email-error">
-          No es una matriz valida
-        </p> */}
         <button
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
